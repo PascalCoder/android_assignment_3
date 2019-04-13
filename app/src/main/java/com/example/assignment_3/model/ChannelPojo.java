@@ -1,15 +1,38 @@
 package com.example.assignment_3.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class ChannelPojo {
 
     private String image;
     private String largeimage;
     private String title;
+
+    @SerializedName("dj")
+    @Expose
     private String DJ;
+
+    @SerializedName("djmail")
+    @Expose
     private String DJEmail;
+
+    @SerializedName("listeners")
+    @Expose
     private String numberOfListeners;
     private String genre;
     private String description;
+
+    public ChannelPojo(){}
+
+    public ChannelPojo(String largeimage, String title, String DJ, String DJEmail, String numberOfListeners, String genre) {
+        this.largeimage = largeimage;
+        this.title = title;
+        this.DJ = DJ;
+        this.DJEmail = DJEmail;
+        this.numberOfListeners = numberOfListeners;
+        this.genre = genre;
+    }
 
     public String getImage() {
         return image;
@@ -73,5 +96,17 @@ public class ChannelPojo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "ChannelPojo{" +
+                "largeimage='" + largeimage + '\'' +
+                ", title='" + title + '\'' +
+                ", DJ='" + DJ + '\'' +
+                ", DJEmail='" + DJEmail + '\'' +
+                ", numberOfListeners='" + numberOfListeners + '\'' +
+                ", genre='" + genre + '\'' +
+                '}';
     }
 }

@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.assignment_3.R;
+import com.example.assignment_3.model.ChannelPojo;
 import com.example.assignment_3.model.Channels;
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +21,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
                            implements PresenterContractCustomAdapter{
 
     Channels channelList;
+    ChannelPojo channel;
+    CardView cardView;
 
     public CustomAdapter(Channels channelList){
         this.channelList = channelList;
@@ -43,10 +47,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
                 .resize(200, 200)
                 .into(channelViewHolder.imageView);
 
-        channelViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+        ChannelPojo channelPojo = channelList.channels.get(i);
+        channel = new ChannelPojo(channelPojo.getLargeimage(), channelPojo.getTitle(),
+                channelPojo.getDJ(), channelPojo.getDJEmail(),
+                channelPojo.getNumberOfListeners(),
+                channelPojo.getGenre());
+
+        cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showChannelDetails();
+                Log.d("Info", channel.toString());
+                Toast.makeText(v.getContext(), "" + channel.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -64,11 +76,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
     public class ChannelViewHolder extends RecyclerView.ViewHolder {
 
         //Items of the item_layout.xml file
-        CardView cardView;
+        //CardView cardView;
         ImageView imageView;
         TextView tvTitle;
         TextView tvDescription;
         TextView tvDJ;
+
 
         public ChannelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +91,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvDescription = itemView.findViewById(R.id.tv_description);
             tvDJ = itemView.findViewById(R.id.tv_dj);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "" + channel.toString(), Toast.LENGTH_SHORT).show();
+                    Log.d("Card View", "Inside the ChannelViewHolder");
+                }
+            });
+            //Toast.makeText(itemView.getContext(), "" + channel.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 }

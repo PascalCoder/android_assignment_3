@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements ViewContractMainA
 
         presenter = new Presenter();
 
-        presenter.bindView(this); //something's up here
+        presenter.bindView(this);
         presenter.initializeRetrofit();
         presenter.getChannels();
     }
