@@ -1,9 +1,12 @@
 package com.example.assignment_3.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ChannelPojo {
+public class ChannelPojo implements Parcelable {
 
     private String image;
     private String largeimage;
@@ -108,5 +111,21 @@ public class ChannelPojo {
                 ", numberOfListeners='" + numberOfListeners + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.image);
+        dest.writeString(this.title);
+        dest.writeString(this.DJ);
+        dest.writeString(this.DJEmail);
+        dest.writeString(this.numberOfListeners);
+        dest.writeString(this.genre);
+        dest.writeString(this.largeimage);
     }
 }

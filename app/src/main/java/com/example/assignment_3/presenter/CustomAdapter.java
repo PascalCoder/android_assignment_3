@@ -2,6 +2,7 @@ package com.example.assignment_3.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -83,7 +84,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
 
             //v.getContext().startActivity(intent);
 
+            Bundle bundle = new Bundle();
+            bundle.putString("image", channel.getLargeimage());
+            bundle.putString("title", channel.getTitle());
+            bundle.putString("dj", channel.getDJ());
+            bundle.putString("djmail", channel.getDJEmail());
+            bundle.putString("listeners", channel.getNumberOfListeners());
+            bundle.putString("genre", channel.getGenre());
+
             ChannelDetailsFragment fragment = ChannelDetailsFragment.createNewInstance();
+
+            fragment.setArguments(bundle);
 
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             FragmentManager fragmentManager = activity.getSupportFragmentManager();
