@@ -12,19 +12,24 @@ import com.example.assignment_3.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChannelDetails extends Fragment {
+public class ChannelDetailsFragment extends Fragment implements ViewContractChannelDetails {
 
 
-    public ChannelDetails() {
+    public ChannelDetailsFragment() {
         // Required empty public constructor
     }
 
+    public static ChannelDetailsFragment createNewInstance(){
+        return ViewContractChannelDetails.newInstance();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_channel_details, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_channel_details, container, false);
+
+        return rootView;
     }
 
 }
