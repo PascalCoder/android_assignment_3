@@ -17,11 +17,6 @@ import com.squareup.picasso.Picasso;
  */
 public class ChannelDetailsFragment extends Fragment implements ViewContractChannelDetails {
 
-    ImageView imageView;
-    TextView tvTitle, tvDJ, tvDJEmail, tvListeners, tvGenre;
-
-    String image, title, djText, djEmailText, numOfListeners, genreText;
-
     public ChannelDetailsFragment() {
         // Required empty public constructor
     }
@@ -30,11 +25,20 @@ public class ChannelDetailsFragment extends Fragment implements ViewContractChan
         return ViewContractChannelDetails.newInstance();
     }
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_channel_details, container, false);
+
+        ImageView imageView;
+        TextView tvTitle, tvDJ, tvDJEmail, tvListeners, tvGenre;
+
+        String image, title, djText, djEmailText, numOfListeners, genreText;
 
         imageView = rootView.findViewById(R.id.iv_image);
         tvTitle = rootView.findViewById(R.id.tv_title_dp);
@@ -42,6 +46,7 @@ public class ChannelDetailsFragment extends Fragment implements ViewContractChan
         tvDJEmail = rootView.findViewById(R.id.tv_djmail);
         tvListeners = rootView.findViewById(R.id.tv_listeners);
         tvGenre = rootView.findViewById(R.id.tv_genre);
+
 
         image = getArguments().getString("image");
         title = getArguments().getString("title");
@@ -58,6 +63,10 @@ public class ChannelDetailsFragment extends Fragment implements ViewContractChan
         tvGenre.setText(genreText);
 
         return rootView;
+    }
+
+    public void onBackPressed(){
+
     }
 
 }

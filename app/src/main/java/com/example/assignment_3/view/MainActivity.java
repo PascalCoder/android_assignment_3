@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity implements ViewContractMainA
     public static RecyclerView recyclerView;
     public static SearchView searchView;
     public static FrameLayout frameLayout;
-    PresenterContract presenterContract;
-    Presenter presenter;
+    PresenterContract presenter;
+    //Presenter presenter;
     ChannelApi api;
 
     public static boolean isChannelDetailsDisplayed;

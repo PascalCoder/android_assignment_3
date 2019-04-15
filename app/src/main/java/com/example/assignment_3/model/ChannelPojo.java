@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ChannelPojo implements Parcelable {
+public class ChannelPojo { /* implements Parcelable */
 
     private String image;
     private String largeimage;
@@ -113,7 +113,7 @@ public class ChannelPojo implements Parcelable {
                 '}';
     }
 
-    @Override
+    /*@Override
     public int describeContents() {
         return 0;
     }
@@ -127,5 +127,5 @@ public class ChannelPojo implements Parcelable {
         dest.writeString(this.numberOfListeners);
         dest.writeString(this.genre);
         dest.writeString(this.largeimage);
-    }
+    } */
 }

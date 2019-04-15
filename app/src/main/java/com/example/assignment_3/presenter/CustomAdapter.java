@@ -1,7 +1,6 @@
 package com.example.assignment_3.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +31,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
                            implements PresenterContractCustomAdapter{
 
     Channels channelList;
-    static ChannelPojo channel;
+    ChannelPojo channelPojo;
     static CardView cardView;
 
     private SearchView searchView;
@@ -61,55 +60,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
         channelViewHolder.tvDescription.setText(channelList.channels.get(i).getDescription());
         channelViewHolder.tvDJ.setText(channelList.channels.get(i).getDJ());
         Picasso.get().load(channelList.channels.get(i).getImage())
-                .resize(200, 200)
-                .into(channelViewHolder.imageView);
+                .resize(260, 260)
+                .into(channelViewHolder.ivThumbnail);
 
-        ChannelPojo channelPojo = channelList.channels.get(i);
-        channel = new ChannelPojo(channelPojo.getLargeimage(), channelPojo.getTitle(),
-                channelPojo.getDJ(), channelPojo.getDJEmail(),
-                channelPojo.getNumberOfListeners(),
-                channelPojo.getGenre());
-
-        cardView.setOnClickListener(v -> {
-
-            frameLayout.setVisibility(View.VISIBLE);
-            showChannelDetails();
-            Log.d("Info", channel.toString());
-            Toast.makeText(v.getContext(), "" + channel.toString(), Toast.LENGTH_SHORT).show();
-
-            Log.d("Card View", "Inside the onBindViewHolder of CustomAdapter");
-
-            Intent intent = new Intent(v.getContext(), ChannelDetailsFragment.class);
-            //intent.setClass(v.getContext(), ChannelDetailsFragment.class);
-
-            //v.getContext().startActivity(intent);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("image", channel.getLargeimage());
-            bundle.putString("title", channel.getTitle());
-            bundle.putString("dj", channel.getDJ());
-            bundle.putString("djmail", channel.getDJEmail());
-            bundle.putString("listeners", channel.getNumberOfListeners());
-            bundle.putString("genre", channel.getGenre());
-
-            ChannelDetailsFragment fragment = ChannelDetailsFragment.createNewInstance();
-
-            fragment.setArguments(bundle);
-
-            AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragment_container, fragment).addToBackStack(null).commit();
-
-            //recyclerView = v.findViewById(R.id.recycler_view);
-            MainActivity.recyclerView.setVisibility(View.GONE);
-
-            //searchView = v.findViewById(R.id.sv_search_icon);
-            MainActivity.searchView.setVisibility(View.GONE);
-
-            MainActivity.isChannelDetailsDisplayed = true;
-
-        });
+        channelViewHolder.tvDJMail.setText(channelList.channels.get(i).getDJEmail());
+        channelViewHolder.tvListeners.setText(channelList.channels.get(i).getNumberOfListeners());
+        channelViewHolder.tvGenre.setText(channelList.channels.get(i).getGenre());
+        channelViewHolder.tvLargeI.setText(channelList.channels.get(i).getLargeimage());
     }
 
     @Override
@@ -126,30 +83,62 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
     public class ChannelViewHolder extends RecyclerView.ViewHolder {
 
         //Items of the item_layout.xml file
-        //CardView cardView;
-        ImageView imageView;
-        TextView tvTitle;
-        TextView tvDescription;
-        TextView tvDJ;
-        Context context;
+        ImageView ivThumbnail;
+        TextView tvTitle, tvDescription, tvDJ;
+
+        TextView tvLargeI, tvDJMail, tvListeners, tvGenre;
 
 
         public ChannelViewHolder(@NonNull View itemView) {
             super(itemView);
 
             cardView = itemView.findViewById(R.id.card_view);
-            imageView = itemView.findViewById(R.id.iv_thumbnail);
+            ivThumbnail = itemView.findViewById(R.id.iv_thumbnail);
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvDescription = itemView.findViewById(R.id.tv_description);
             tvDJ = itemView.findViewById(R.id.tv_dj);
 
-            /*cardView.setOnClickListener(new View.OnClickListener() {
+            tvLargeI = itemView.findViewById(R.id.tv_image_large);
+            tvDJMail = itemView.findViewById(R.id.tv_djmail_i);
+            tvListeners = itemView.findViewById(R.id.tv_listeners_i);
+            tvGenre = itemView.findViewById(R.id.tv_genre_i);
+
+            cardView.setOnClickListener(new View.OnClickListener(){
+
                 @Override
-                public void onClick(View v) {
-                    //Toast.makeText(v.getContext(), "" + channel.toString(), Toast.LENGTH_SHORT).show();
-                    //Log.d("Card View", "Inside the ChannelViewHolder");
+                public void onClick(View v){
+                    //Log.d("Info", channel.toString()); //tvTitle.getText()
+                    channelPojo = new ChannelPojo(tvLargeI.getText().toString(), tvTitle.getText().toString(), tvDJ.getText().toString(),
+                                                   tvDJMail.getText().toString(), tvListeners.getText().toString(), tvGenre.getText().toString());
+                    Toast.makeText(v.getContext(), "" + channelPojo, Toast.LENGTH_SHORT).show();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("image", channelPojo.getLargeimage());
+                    bundle.putString("title", channelPojo.getTitle());
+                    bundle.putString("dj", channelPojo.getDJ());
+                    bundle.putString("djmail", channelPojo.getDJEmail());
+                    bundle.putString("listeners", channelPojo.getNumberOfListeners());
+                    bundle.putString("genre", channelPojo.getGenre());
+
+                    ChannelDetailsFragment fragment = ChannelDetailsFragment.createNewInstance();
+                    fragment.setArguments(bundle);
+
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+
+
+                    MainActivity.recyclerView.setVisibility(View.GONE);
+
+                    //searchView = v.findViewById(R.id.sv_search_icon);
+                    MainActivity.searchView.setVisibility(View.GONE);
+
+                    MainActivity.isChannelDetailsDisplayed = true;
+
+                    frameLayout.setVisibility(View.VISIBLE);
                 }
-            });*/
+            });
         }
     }
 }

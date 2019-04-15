@@ -1,92 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ChannelDetailsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
-        <ImageView
-            android:id="@+id/iv_image"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_image"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8pt"/>
+            android:weightSum="10"
+            android:gravity="center">
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="80pt"
+                    android:layout_height="350dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginTop="2pt"
+                    android:layout_marginBottom="2pt"
+                    android:layout_weight="8"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_title_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@+id/tv_title_dp"
-            android:layout_below="@+id/iv_image"
-            android:text="Title: "/>
+            android:layout_below="@+id/ll_image"
+            android:text="Title: "
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"/>
         <TextView
             android:id="@+id/tv_title_dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_title_label"/>
+            android:layout_below="@+id/tv_title_label"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"/>
 
         <TextView
             android:id="@+id/tv_dj_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/tv_title_dp"
+            android:labelFor="@+id/tv_dj_dp"
             android:layout_below="@+id/tv_title_dp"
-            android:text="DJ: "/>
+            android:text="DJ: "
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"/>
         <TextView
             android:id="@+id/tv_dj_dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_dj_label"/>
+            android:layout_below="@+id/tv_dj_label"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"/>
 
         <TextView
             android:id="@+id/tv_djmail_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@+id/tv_djmail"
-            android:layout_below="@+id/iv_image"
-            android:text="Email: "/>
+            android:layout_below="@+id/tv_dj_dp"
+            android:text="Email: "
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"/>
         <TextView
             android:id="@+id/tv_djmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_djmail_label"/>
+            android:layout_below="@+id/tv_djmail_label"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"/>
 
         <TextView
             android:id="@+id/tv_listeners_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/tv_title_dp"
-            android:layout_below="@+id/iv_image"
-            android:text="Number of Listeners: "/>
+            android:labelFor="@+id/tv_listeners"
+            android:layout_below="@+id/tv_djmail"
+            android:text="Number of Listeners: "
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"/>
         <TextView
             android:id="@+id/tv_listeners"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_listeners_label"/>
+            android:layout_below="@+id/tv_listeners_label"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"/>
 
         <TextView
             android:id="@+id/tv_genre_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:labelFor="@+id/tv_genre"
-            android:layout_below="@+id/iv_image"
-            android:text="Genre: "/>
+            android:layout_below="@+id/tv_listeners"
+            android:text="Genre: "
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"/>
         <TextView
             android:id="@+id/tv_genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_genre_label"/>
-    </RelativeLayout>
-
-</FrameLayout>
+            android:layout_below="@+id/tv_genre_label"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="10dp"/>
+        </RelativeLayout>
+</ScrollView>
