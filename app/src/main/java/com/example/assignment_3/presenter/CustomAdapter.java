@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -24,13 +26,17 @@ import com.example.assignment_3.view.ChannelDetailsFragment;
 import com.example.assignment_3.view.MainActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.assignment_3.view.MainActivity.frameLayout;
 
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelViewHolder>
-                           implements PresenterContractCustomAdapter{
+                           implements PresenterContractCustomAdapter, Filterable {
 
-    Channels channelList;
+    public static Channels channelList;
+    List<ChannelPojo> channelsFilter;
     ChannelPojo channelPojo;
     static CardView cardView;
 
@@ -42,6 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
 
     public CustomAdapter(Channels channelList){
         this.channelList = channelList;
+        channelsFilter = new ArrayList<>(channelList.channels);
     }
 
     @NonNull
@@ -67,6 +74,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
         channelViewHolder.tvListeners.setText(channelList.channels.get(i).getNumberOfListeners());
         channelViewHolder.tvGenre.setText(channelList.channels.get(i).getGenre());
         channelViewHolder.tvLargeI.setText(channelList.channels.get(i).getLargeimage());
+
+        //channelViewHolder.tvUrl.setText(channelList.channels.get(i).getPlaylists()[0]);
     }
 
     @Override
@@ -80,13 +89,50 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
 
     }
 
+    @Override
+    public Filter getFilter() {
+        return channelFilter;
+    }
+
+    private Filter channelFilter = new Filter(){
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<ChannelPojo> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0){
+                filteredList.addAll(channelsFilter);
+            }else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(ChannelPojo channel : channelsFilter){
+                    if(channel.getDJ().toLowerCase().contains(filterPattern)){
+                        filteredList.add(channel);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            channelList.channels.clear();
+            channelList.channels.addAll((List)results.values);
+
+            notifyDataSetChanged();
+        }
+    };
+
     public class ChannelViewHolder extends RecyclerView.ViewHolder {
 
         //Items of the item_layout.xml file
         ImageView ivThumbnail;
         TextView tvTitle, tvDescription, tvDJ;
 
-        TextView tvLargeI, tvDJMail, tvListeners, tvGenre;
+        TextView tvLargeI, tvDJMail, tvListeners, tvGenre, tvUrl;
 
 
         public ChannelViewHolder(@NonNull View itemView) {
@@ -102,6 +148,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
             tvDJMail = itemView.findViewById(R.id.tv_djmail_i);
             tvListeners = itemView.findViewById(R.id.tv_listeners_i);
             tvGenre = itemView.findViewById(R.id.tv_genre_i);
+            tvUrl = itemView.findViewById(R.id.tv_url);
 
             cardView.setOnClickListener(new View.OnClickListener(){
 
@@ -110,7 +157,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
                     //Log.d("Info", channel.toString()); //tvTitle.getText()
                     channelPojo = new ChannelPojo(tvLargeI.getText().toString(), tvTitle.getText().toString(), tvDJ.getText().toString(),
                                                    tvDJMail.getText().toString(), tvListeners.getText().toString(), tvGenre.getText().toString());
-                    Toast.makeText(v.getContext(), "" + channelPojo, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(), "" + channelPojo, Toast.LENGTH_SHORT).show();
 
                     Bundle bundle = new Bundle();
                     bundle.putString("image", channelPojo.getLargeimage());
@@ -119,6 +166,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ChannelVie
                     bundle.putString("djmail", channelPojo.getDJEmail());
                     bundle.putString("listeners", channelPojo.getNumberOfListeners());
                     bundle.putString("genre", channelPojo.getGenre());
+                    //bundle.putString("url", channelPojo.getPlaylists()[0]);
 
                     ChannelDetailsFragment fragment = ChannelDetailsFragment.createNewInstance();
                     fragment.setArguments(bundle);

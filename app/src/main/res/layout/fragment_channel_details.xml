@@ -110,5 +110,12 @@
             android:layout_below="@+id/tv_genre_label"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="10dp"/>
+
+         <TextView
+             android:id="@+id/tv_url_dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="8dp"
+             android:layout_marginBottom="10dp"/>
         </RelativeLayout>
 </ScrollView>

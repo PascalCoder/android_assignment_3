@@ -48,17 +48,19 @@ public class MainActivity extends AppCompatActivity implements ViewContractMainA
         presenter.initializeRetrofit();
         presenter.getChannels();
 
-        /*CustomAdapter customAdapter = new CustomAdapter();
-        CardView cardView = CustomAdapter.cardView;
-        cardView.setOnClickListener(new View.OnClickListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getApplication(), ChannelDetailsFragment.class);
-
-                startActivity(intent);
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
-        });*/
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                (new CustomAdapter(CustomAdapter.channelList)).getFilter().filter(newText);
+                return false;
+            }
+        });
+
     }
 
     @Override

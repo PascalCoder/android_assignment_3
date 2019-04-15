@@ -25,6 +25,7 @@ public class ChannelPojo { /* implements Parcelable */
     private String numberOfListeners;
     private String genre;
     private String description;
+    //private String[] playlists;
 
     public ChannelPojo(){}
 
@@ -100,6 +101,14 @@ public class ChannelPojo { /* implements Parcelable */
     public void setDescription(String description) {
         this.description = description;
     }
+
+    /*public String[] getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(String[] playlists) {
+        this.playlists = playlists;
+    }*/
 
     @Override
     public String toString() {
